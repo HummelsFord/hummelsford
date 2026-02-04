@@ -13,6 +13,8 @@ h1 {
 }
 
 .film-card {
+    display: flex;
+    gap: 20px; /* spazio tra immagine e info */
     border: 1px solid #ccc;
     padding: 15px;
     margin-bottom: 30px;
@@ -22,8 +24,10 @@ h1 {
 }
 
 .film-card img {
-    display: block;
     max-width: 200px;
-    margin-bottom: 15px;
     border-radius: 4px;
+}
+
+.film-info {
+    flex: 1; /* occupa il resto dello spazio */
 }
