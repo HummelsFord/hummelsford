@@ -1,3 +1,14 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* centra tutto orizzontalmente */
+}
+
+
 .film-card {
     max-width: 700px; /* larghezza massima della card */
     margin: 20px auto; /* centra la card orizzontalmente */
