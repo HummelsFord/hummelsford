@@ -1,20 +1,4 @@
-body {
-    font-family: Arial, sans-serif;
-    max-width: 900px;
-    margin: auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    color: #333;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
 .film-card {
-    display: flex;
-    gap: 20px; /* spazio tra immagine e info */
     border: 1px solid #ccc;
     padding: 15px;
     margin-bottom: 30px;
@@ -23,11 +7,22 @@ h1 {
     box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
 }
 
-.film-card img {
+.film-main {
+    display: flex;
+    gap: 20px;
+}
+
+.film-main img {
     max-width: 200px;
     border-radius: 4px;
 }
 
 .film-info {
-    flex: 1; /* occupa il resto dello spazio */
+    flex: 1;
+}
+
+.film-notes {
+    margin-top: 15px; /* spazio tra info e note */
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
 }
