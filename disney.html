@@ -1,87 +1,36 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
+    <!-- Specifica che il documento è in italiano e il set di caratteri UTF-8 -->
     <meta charset="UTF-8">
     <title>Film Disney</title>
+    <!-- Collega il file CSS che contiene lo stile della pagina -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+
+
+
+
+
+    <!-- Titolo principale della pagina -->
     <h1>Film Disney</h1>
 
+    <!-- Contenitore principale del "slider" dei film -->
     <div class="slider">
+        <!-- Bottone per andare al film precedente -->
         <button id="prev">⬅</button>
+        <!-- Dove verranno mostrati i film -->
         <div id="film-container"></div>
+        <!-- Bottone per andare al film successivo -->
         <button id="next">➡</button>
     </div>
 
+    <!-- Link per tornare alla home -->
     <a href="index.html">← Torna alla home</a>
 
-    <script>
-    const url = "https://tests.byronlovexavier.workers.dev";
 
-    let films = [];
-    let currentIndex = 0;
+   <script src="js/main.js"></script>
 
-    function renderFilm(index) {
-        const film = films[index];
-        const container = document.getElementById("film-container");
-        container.style.opacity = 0;  // fade out
-
-        setTimeout(() => {
-            container.innerHTML = `
-                <div class="film-card">
-                    <h2>${film.title}</h2>
-                    <div class="film-main">
-                        <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="${film.title}">
-                        <div class="film-info">
-                            <p class="rating">⭐ ${film.rating}/10</p>
-                            <p><strong>Anno:</strong> ${film.year}</p>
-                            <p><strong>Visto il:</strong> ${film.date}</p>
-                            <p><strong>Voto musiche:</strong> ${film.music}/10</p>
-                            <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
-                            <p><strong>Voto trama:</strong> ${film.plot}/10</p>
-                            <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
-                            <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
-                            <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
-                        </div>
-                    </div>
-                    <div class="film-notes">
-                        <p><strong>Note:</strong> ${film.notes}</p>
-                    </div>
-                </div>
-            `;
-            container.style.opacity = 1;  // fade in
-        }, 150);
-    }
-
-    async function loadFilms() {
-        const response = await fetch(url);
-        films = await response.json();
-        renderFilm(currentIndex);
-    }
-
-    document.getElementById("next").addEventListener("click", () => {
-        currentIndex = (currentIndex + 1) % films.length;
-        renderFilm(currentIndex);
-    });
-
-    document.getElementById("prev").addEventListener("click", () => {
-        currentIndex = (currentIndex - 1 + films.length) % films.length;
-        renderFilm(currentIndex);
-    });
-
-    // Navigazione con tastiera
-    document.addEventListener("keydown", (e) => {
-        if(e.key === "ArrowRight") {
-            currentIndex = (currentIndex + 1) % films.length;
-            renderFilm(currentIndex);
-        } else if(e.key === "ArrowLeft") {
-            currentIndex = (currentIndex - 1 + films.length) % films.length;
-            renderFilm(currentIndex);
-        }
-    });
-
-    loadFilms();
-    </script>
 </body>
 </html>
