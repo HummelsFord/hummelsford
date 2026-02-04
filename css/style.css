@@ -11,7 +11,10 @@
 .film-main {
     display: flex;
     gap: 20px;
+    align-items: flex-start; /* allinea in alto */
+    flex-wrap: wrap; /* in mobile l'immagine scende sotto */
 }
+
 
 .film-main img {
     max-width: 200px;
