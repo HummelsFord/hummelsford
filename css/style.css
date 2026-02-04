@@ -1,4 +1,6 @@
 .film-card {
+    max-width: 700px; /* larghezza massima della card */
+    margin: 20px auto; /* centra la card orizzontalmente */
     border: 1px solid #ccc;
     padding: 15px;
     margin-bottom: 30px;
