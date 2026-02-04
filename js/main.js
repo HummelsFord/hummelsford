@@ -20,25 +20,25 @@
             // Inserisce l'HTML del film dentro il contenitore
             container.innerHTML = `
                 <div class="film-card">
-                    <h2>${film.title}</h2>
+                    <h2>${film.titolo}</h2>
                     <div class="film-main">
                         <!-- Immagine del film -->
-                        <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="${film.title}">
+                        <img src="foto/${film.titolo.toLowerCase().replace(/ /g, "")}.jpg" alt="${film.titolo}">
                         <div class="film-info">
                             <!-- Vari dettagli del film -->
-                            <p class="rating">⭐ ${film.rating}/10</p>
-                            <p><strong>Anno:</strong> ${film.year}</p>
-                            <p><strong>Visto il:</strong> ${film.date}</p>
-                            <p><strong>Voto musiche:</strong> ${film.music}/10</p>
-                            <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
-                            <p><strong>Voto trama:</strong> ${film.plot}/10</p>
-                            <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
-                            <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
-                            <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
+                            <p class="rating">⭐ ${film.voto}/10</p>
+                            <p><strong>Anno:</strong> ${film.annoDiUscita}</p>
+                            <p><strong>Visto il:</strong> ${film.dataDiVisione}</p>
+                            <p><strong>Voto musiche:</strong> ${film.musica}/10</p>
+                            <p><strong>Voto scorrevolezza:</strong> ${film.scorrevolezza}/10</p>
+                            <p><strong>Voto trama:</strong> ${film.trama}/10</p>
+                            <p><strong>Voto dramma:</strong> ${film.dramma}/10</p>
+                            <p><strong>Voto divertimento:</strong> ${film.divertimento}/10</p>
+                            <p><strong>Scena preferita:</strong> ${film.scenaPreferita}</p>
                         </div>
                     </div>
                     <div class="film-notes">
-                        <p><strong>Note:</strong> ${film.notes}</p>
+                        <p><strong>Note:</strong> ${film.note}</p>
                     </div>
                 </div>
             `;
