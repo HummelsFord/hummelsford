@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+}
+
+
 body {
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
@@ -24,8 +29,7 @@ a:hover {
 
 
 .film-card {
-    width: 700px;        /* larghezza FISSA */
-    max-width: 100%;     /* per mobile */
+    width: 100%;
     margin: 20px auto; /* centra la card orizzontalmente */
     border: 1px solid #ccc;
     padding: 15px;
