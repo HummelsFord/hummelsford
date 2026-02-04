@@ -8,71 +8,80 @@
 <body>
     <h1>Film Disney</h1>
 
-<div class="slider">
-    <button id="prev">⬅</button>
+    <div class="slider">
+        <button id="prev">⬅</button>
+        <div id="film-container"></div>
+        <button id="next">➡</button>
+    </div>
 
-    <div id="film-container"></div>
+    <a href="index.html">← Torna alla home</a>
 
-    <button id="next">➡</button>
-</div>
+    <script>
+    const url = "https://tests.byronlovexavier.workers.dev";
 
-<script>
-const url = "https://tests.byronlovexavier.workers.dev";
+    let films = [];
+    let currentIndex = 0;
 
-let films = [];
-let currentIndex = 0;
+    function renderFilm(index) {
+        const film = films[index];
+        const container = document.getElementById("film-container");
+        container.style.opacity = 0;  // fade out
 
-function renderFilm(index) {
-    const film = films[index];
-    const container = document.getElementById("film-container");
-
-    container.innerHTML = `
-        <div class="film-card">
-            <h2>${film.title}</h2>
-
-            <div class="film-main">
-                <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="${film.title}">
-                
-                <div class="film-info">
-                    <p><strong>Valutazione finale:</strong> ${film.rating}/10</p>
-                    <p><strong>Anno:</strong> ${film.year}</p>
-                    <p><strong>Visto il:</strong> ${film.date}</p>
-                    <p><strong>Voto musiche:</strong> ${film.music}/10</p>
-                    <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
-                    <p><strong>Voto trama:</strong> ${film.plot}/10</p>
-                    <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
-                    <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
-                    <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
+        setTimeout(() => {
+            container.innerHTML = `
+                <div class="film-card">
+                    <h2>${film.title}</h2>
+                    <div class="film-main">
+                        <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="${film.title}">
+                        <div class="film-info">
+                            <p class="rating">⭐ ${film.rating}/10</p>
+                            <p><strong>Anno:</strong> ${film.year}</p>
+                            <p><strong>Visto il:</strong> ${film.date}</p>
+                            <p><strong>Voto musiche:</strong> ${film.music}/10</p>
+                            <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
+                            <p><strong>Voto trama:</strong> ${film.plot}/10</p>
+                            <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
+                            <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
+                            <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
+                        </div>
+                    </div>
+                    <div class="film-notes">
+                        <p><strong>Note:</strong> ${film.notes}</p>
+                    </div>
                 </div>
-            </div>
+            `;
+            container.style.opacity = 1;  // fade in
+        }, 150);
+    }
 
-            <div class="film-notes">
-                <p><strong>Note:</strong> ${film.notes}</p>
-            </div>
-        </div>
-    `;
-}
+    async function loadFilms() {
+        const response = await fetch(url);
+        films = await response.json();
+        renderFilm(currentIndex);
+    }
 
-async function loadFilms() {
-    const response = await fetch(url);
-    films = await response.json();
-    renderFilm(currentIndex);
-}
+    document.getElementById("next").addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % films.length;
+        renderFilm(currentIndex);
+    });
 
-document.getElementById("next").addEventListener("click", () => {
-    currentIndex = (currentIndex + 1) % films.length;
-    renderFilm(currentIndex);
-});
+    document.getElementById("prev").addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + films.length) % films.length;
+        renderFilm(currentIndex);
+    });
 
-document.getElementById("prev").addEventListener("click", () => {
-    currentIndex = (currentIndex - 1 + films.length) % films.length;
-    renderFilm(currentIndex);
-});
+    // Navigazione con tastiera
+    document.addEventListener("keydown", (e) => {
+        if(e.key === "ArrowRight") {
+            currentIndex = (currentIndex + 1) % films.length;
+            renderFilm(currentIndex);
+        } else if(e.key === "ArrowLeft") {
+            currentIndex = (currentIndex - 1 + films.length) % films.length;
+            renderFilm(currentIndex);
+        }
+    });
 
-loadFilms();
-</script>
-
-<a href="index.html">← Torna alla home</a>
-
+    loadFilms();
+    </script>
 </body>
 </html>
