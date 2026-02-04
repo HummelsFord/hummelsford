@@ -8,53 +8,54 @@
 <body>
     <h1>Disney Movies</h1>
 
-<div class="film-card">
-    <h2>Biancaneve e i sette nani</h2>
-    <div class="film-main">
-        <img src="foto/biancaneve.jpg" alt="Copertina Biancaneve">
-        <div class="film-info">
-            <p><strong>Valutazione finale:</strong> 7/10</p>
-            <p><strong>Anno:</strong> 1937</p>
-            <p><strong>Visto il:</strong> 14 gennaio 2026</p>
-            <p><strong>Voto musiche:</strong> 5/10</p>
-            <p><strong>Voto scorrevolezza:</strong> 7/10</p>
-            <p><strong>Voto trama:</strong> 6,5/10</p>
-            <p><strong>Voto dramma:</strong> 5,5/10</p>
-            <p><strong>Voto divertimento:</strong> 6/10</p>
-            <p><strong>Scena preferita:</strong> Quando la matrigna cade dal dirupo.</p>
-        </div>
-    </div>
-    <div class="film-notes">
-        <p><strong>Note:</strong> Disegni un pò inquietanti, non capisco perché la strega sia dovuta diventare vecchia per darle la mela, poteva semplicemente jumpare dentro la casa dei nani e fargliela ingoiare. 
-        Il principe abbastanza inutile.
-        Nel complesso il film è carino e c’è qualche scena divertente dei nani (tutti abbastanza dimenticabili tranne Brontolo).</p>
-    </div>
-</div>
+    <!-- Qui verranno generate le card dei film -->
+    <div id="film-container"></div>
 
+    <script>
+        // URL del tuo Worker
+        const url = "https://testbe.byronlovexavier.workers.dev";
 
+        async function loadFilms() {
+            try {
+                const response = await fetch(url);
+                const films = await response.json();
 
-<div class="film-card">
-    <h2>Pinocchio</h2>
-    <div class="film-main">
-        <img src="foto/pinocchio.jpg" alt="Copertina Pinocchio">
-        <div class="film-info">
-            <p><strong>Valutazione finale:</strong> 5/10</p>
-            <p><strong>Anno:</strong> 1940</p>
-            <p><strong>Visto il:</strong> 18 gennaio 2026</p>
-            <p><strong>Voto musiche:</strong> 5/10</p>
-            <p><strong>Voto scorrevolezza:</strong> 6/10</p>
-            <p><strong>Voto trama:</strong> 4/10</p>
-            <p><strong>Voto dramma:</strong> 6,5/10</p>
-            <p><strong>Voto divertimento:</strong> 4/10</p>
-            <p><strong>Scena preferita:</strong> Geppetto che dorme con il gatto.</p>
-        </div>
-    </div>
-    <div class="film-notes">
-        <p><strong>Note:</strong> Totalemente diverso dalle aspettative e dalla fama, Pinocchio dice praticamente in una sola scena le bugie e quindi non capisco perché sia un suo tratto distintivo comune, più che altro è un credulone. Geppetto l’unico personaggio degno di nota, il grillo abbastanza inutile, la volpe, il gatto e gli altri personaggi inutili. Buco di trama: come ha fatto Geppetto ad essere stato inghiottito dalla balena? Pinocchio e il grillo sono fuggiti dal paese dei balocchi saltando in mare, ma che senso ha avere una porta blindata se puoi fuggire comunque in acqua? Sei scemo?</p>
-    </div>
-</div>
+                const container = document.getElementById("film-container");
+                container.innerHTML = ""; // pulisco eventuale contenuto
 
+                films.forEach(film => {
+                    const card = document.createElement("div");
+                    card.className = "film-card";
 
-    <a href="index.html">← Torna alla home</a>
+                    card.innerHTML = `
+                        <h2>${film.title}</h2>
+                        <div class="film-main">
+                            <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="Copertina ${film.title}">
+                            <div class="film-info">
+                                <p><strong>Valutazione finale:</strong> ${film.rating}/10</p>
+                                <p><strong>Anno:</strong> ${film.year}</p>
+                                <p><strong>Visto il:</strong> ${film.date}</p>
+                                <p><strong>Voto musiche:</strong> ${film.music}/10</p>
+                                <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
+                                <p><strong>Voto trama:</strong> ${film.plot}/10</p>
+                                <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
+                                <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
+                                <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
+                            </div>
+                        </div>
+                        <div class="film-notes">
+                            <p><strong>Note:</strong> ${film.notes}</p>
+                        </div>
+                    `;
+
+                    container.appendChild(card);
+                });
+            } catch (err) {
+                console.error("Errore caricamento film:", err);
+            }
+        }
+
+        loadFilms();
+    </script>
 </body>
 </html>
