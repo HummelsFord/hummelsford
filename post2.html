@@ -2,61 +2,77 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Disney Movies</title>
+    <title>Film Disney</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Disney Movies</h1>
+    <h1>Film Disney</h1>
 
-    <!-- Qui verranno generate le card dei film -->
+<div class="slider">
+    <button id="prev">⬅</button>
+
     <div id="film-container"></div>
 
-    <script>
-        // URL del tuo Worker
-        const url = "https://tests.byronlovexavier.workers.dev";
+    <button id="next">➡</button>
+</div>
 
-        async function loadFilms() {
-            try {
-                const response = await fetch(url);
-                const films = await response.json();
+<script>
+const url = "https://tests.byronlovexavier.workers.dev";
 
-                const container = document.getElementById("film-container");
-                container.innerHTML = ""; // pulisco eventuale contenuto
+let films = [];
+let currentIndex = 0;
 
-                films.forEach(film => {
-                    const card = document.createElement("div");
-                    card.className = "film-card";
+function renderFilm(index) {
+    const film = films[index];
+    const container = document.getElementById("film-container");
 
-                    card.innerHTML = `
-                        <h2>${film.title}</h2>
-                        <div class="film-main">
-                            <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="Copertina ${film.title}">
-                            <div class="film-info">
-                                <p><strong>Valutazione finale:</strong> ${film.rating}/10</p>
-                                <p><strong>Anno:</strong> ${film.year}</p>
-                                <p><strong>Visto il:</strong> ${film.date}</p>
-                                <p><strong>Voto musiche:</strong> ${film.music}/10</p>
-                                <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
-                                <p><strong>Voto trama:</strong> ${film.plot}/10</p>
-                                <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
-                                <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
-                                <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
-                            </div>
-                        </div>
-                        <div class="film-notes">
-                            <p><strong>Note:</strong> ${film.notes}</p>
-                        </div>
-                    `;
+    container.innerHTML = `
+        <div class="film-card">
+            <h2>${film.title}</h2>
 
-                    container.appendChild(card);
-                });
-            } catch (err) {
-                console.error("Errore caricamento film:", err);
-            }
-        }
+            <div class="film-main">
+                <img src="foto/${film.title.toLowerCase().replace(/ /g, "")}.jpg" alt="${film.title}">
+                
+                <div class="film-info">
+                    <p><strong>Valutazione finale:</strong> ${film.rating}/10</p>
+                    <p><strong>Anno:</strong> ${film.year}</p>
+                    <p><strong>Visto il:</strong> ${film.date}</p>
+                    <p><strong>Voto musiche:</strong> ${film.music}/10</p>
+                    <p><strong>Voto scorrevolezza:</strong> ${film.flow}/10</p>
+                    <p><strong>Voto trama:</strong> ${film.plot}/10</p>
+                    <p><strong>Voto dramma:</strong> ${film.drama}/10</p>
+                    <p><strong>Voto divertimento:</strong> ${film.fun}/10</p>
+                    <p><strong>Scena preferita:</strong> ${film.favoriteScene}</p>
+                </div>
+            </div>
 
-        loadFilms();
-    </script>
-     <a href="index.html">← Torna alla home</a>
+            <div class="film-notes">
+                <p><strong>Note:</strong> ${film.notes}</p>
+            </div>
+        </div>
+    `;
+}
+
+async function loadFilms() {
+    const response = await fetch(url);
+    films = await response.json();
+    renderFilm(currentIndex);
+}
+
+document.getElementById("next").addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % films.length;
+    renderFilm(currentIndex);
+});
+
+document.getElementById("prev").addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + films.length) % films.length;
+    renderFilm(currentIndex);
+});
+
+loadFilms();
+</script>
+
+<a href="index.html">← Torna alla home</a>
+
 </body>
 </html>
