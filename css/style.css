@@ -8,6 +8,20 @@ body {
     align-items: center; /* centra tutto orizzontalmente */
 }
 
+h1 {
+    color: #2c3e50;
+}
+
+a {
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
 
 .film-card {
     max-width: 700px; /* larghezza massima della card */
