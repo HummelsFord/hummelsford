@@ -29,8 +29,11 @@ export default {
       }
     ];
 
-    return new Response(JSON.stringify(films), {
-      headers: { "Content-Type": "application/json" }
+     return new Response(JSON.stringify(films), {
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*" // <- questo serve per far funzionare il fetch da GitHub Pages
+      }
     });
   }
 };
