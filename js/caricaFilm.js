@@ -1,4 +1,4 @@
-const URL_API = "https://tests.byronlovexavier.workers.dev";
+const URL_API = "https://test.byronlovexavier.workers.dev";
 
 export async function caricaFilmDalServer() {
   const risposta = await fetch(URL_API);
