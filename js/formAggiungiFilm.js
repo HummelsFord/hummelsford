@@ -2,7 +2,7 @@ import { caricaFilmDalServer } from "./caricaFilm.js";
 import { statoFilm } from "./statoFilm.js";
 import { mostraFilmCorrente } from "./mostraFilm.js";
 
-const API_URL = "http://localhost:8787";
+const API_URL = "https://test.byronlovexavier.workers.dev";
 
 export function inizializzaForm() {
     const form = document.getElementById('form-film');
