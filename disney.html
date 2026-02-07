@@ -26,6 +26,38 @@
         <button id="next">➡</button>
     </div>
 
+
+  <section id="nuovo-film-section">
+    <h2>Aggiungi un nuovo Film</h2>
+    <form id="form-film">
+        <div class="form-group">
+            <input type="text" id="titolo" placeholder="Titolo del film" required>
+            <input type="text" id="tipologia" placeholder="Tipologia (es. Pixar, Classico)">
+        </div>
+        
+        <div class="form-group">
+            <input type="number" id="voto" step="0.1" placeholder="Voto Totale" min="0" max="10">
+            <input type="number" id="anno" placeholder="Anno di uscita">
+            <input type="date" id="dataDiVisione" title="Data di visione">
+        </div>
+
+        <p><strong>Valutazioni (0-10):</strong></p>
+        <div class="form-grid">
+            <input type="number" id="musica" step="0.1" placeholder="Musica" min="0" max="10">
+            <input type="number" id="scorrevolezza" step="0.1" placeholder="Scorrevolezza" min="0" max="10">
+            <input type="number" id="trama" step="0.1" placeholder="Trama" min="0" max="10">
+            <input type="number" id="dramma" step="0.1" placeholder="Dramma" min="0" max="10">
+            <input type="number" id="divertimento" step="0.1" placeholder="Divertimento" min="0" max="10">
+        </div>
+
+        <input type="text" id="scenaPreferita" placeholder="La tua scena preferita">
+        <textarea id="note" placeholder="Note personali..."></textarea>
+        
+        <button type="submit" id="btn-salva">Salva nel Database</button>
+    </form>
+</section>
+
+
     <!-- Link per tornare alla home -->
     <a href="index.html">← Torna alla home</a>
 

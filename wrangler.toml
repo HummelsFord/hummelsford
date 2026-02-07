@@ -1,3 +1,8 @@
 name = "disney-backend"
 main = "index.js"
 compatibility_date = "2026-02-04"
+
+[[d1_databases]]
+binding = "D1_Database"
+database_name = "blog" 
+database_id = "dbcf6b24-e4d7-4e1d-bfb5-037ee519b7c2"

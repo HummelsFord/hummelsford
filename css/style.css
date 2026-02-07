@@ -135,3 +135,55 @@ a:hover {
     background: rgba(0,0,0,0.2);
     border-radius: 3px;
 }
+
+
+#nuovo-film-section {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#btn-salva {
+    background-color: #0070f3;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+#btn-salva:hover {
+    background-color: #0051a2;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+#form-film input, #form-film textarea {
+    margin-bottom: 10px; /* Spazio tra le righe */
+}
+
+#dataDiVisione {
+    cursor: pointer;
+}
