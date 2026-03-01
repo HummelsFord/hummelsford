@@ -45,136 +45,121 @@
 
     <!-- PDF Viewer Script -->
     <script>
-        let pdfDoc = null;
-        let pageNum = 1;
-        let pageRendering = false;
-        let pageNumPending = null;
-        let baseScale = 1; // Memorizza la scala iniziale
+    let pdfDoc = null;
+let pageNum = 1;
+let pageRendering = false;
+let pageNumPending = null;
 
-        const canvas = document.getElementById('pdf-canvas');
-        const ctx = canvas.getContext('2d');
-        const pdfViewer = document.querySelector('.pdf-viewer');
+const canvas = document.getElementById('pdf-canvas');
+const ctx = canvas.getContext('2d');
+const pdfViewer = document.querySelector('.pdf-viewer');
 
-        // Set worker for PDF.js
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-        function calculateScale() {
-            // Calcola scala una sola volta al caricamento
-            if (baseScale !== 1) return baseScale;
+function renderPage(num) {
+    pageRendering = true;
+    pdfDoc.getPage(num).then(function(page) {
+        // --- FIX SGRANATURA ---
+        // Recuperiamo il fattore di densità (es. 2 o 3 su smartphone moderni)
+        const dpr = window.devicePixelRatio || 1;
+        
+        // Calcoliamo la scala base in base alla larghezza del contenitore
+        const containerWidth = pdfViewer.clientWidth;
+        let scale = containerWidth / page.getViewport({ scale: 1 }).width;
 
-            const availWidth = pdfViewer.clientWidth;
-            // ignore height - container may not constrain vertically
-            let scale = availWidth / 595; // base on A4 width
-
-            // riduci ancora di più su desktop per renderlo più piccolo
-            if (window.innerWidth > 1024) {
-                scale *= 0.5; // riduzione aggiuntiva
-            }
-
-            return scale;
+        // Se siamo su desktop, riduciamo leggermente come nel tuo codice originale
+        if (window.innerWidth > 1024) {
+            scale *= 0.7; 
         }
 
-        function renderPage(num) {
-            pageRendering = true;
-            pdfDoc.getPage(num).then(function(page) {
-                const scale = baseScale;
-                const viewport = page.getViewport({ scale: scale });
-                canvas.height = viewport.height;
-                canvas.width = viewport.width;
+        // Creiamo il viewport con la scala corretta moltiplicata per il dpr
+        const viewport = page.getViewport({ scale: scale * dpr });
+        
+        // Impostiamo la dimensione reale del canvas (alta risoluzione)
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
 
-                const renderContext = {
-                    canvasContext: ctx,
-                    viewport: viewport
-                };
-                const renderTask = page.render(renderContext);
-                renderTask.promise.then(function() {
-                    pageRendering = false;
-                    if (pageNumPending !== null) {
-                        renderPage(pageNumPending);
-                        pageNumPending = null;
-                    }
-                });
-            });
+        // Impostiamo la dimensione visiva via CSS (dimensione corretta nello schermo)
+        canvas.style.width = containerWidth + "px";
+        if (window.innerWidth > 1024) canvas.style.width = (containerWidth * 0.7) + "px";
+        canvas.style.height = "auto";
 
-            document.getElementById('page-num').textContent = num;
-        }
-
-        function queuePage(num) {
-            if (num < 1 || num > pdfDoc.numPages) {
-                return;
+        const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+        };
+        
+        const renderTask = page.render(renderContext);
+        renderTask.promise.then(function() {
+            pageRendering = false;
+            if (pageNumPending !== null) {
+                renderPage(pageNumPending);
+                pageNumPending = null;
             }
-            if (pageRendering) {
-                pageNumPending = num;
-            } else {
-                renderPage(num);
-            }
-        }
-
-        document.getElementById('prev-btn').addEventListener('click', function() {
-            if (pageNum <= 1) return;
-            pageNum--;
-            queuePage(pageNum);
         });
+    });
 
-        document.getElementById('next-btn').addEventListener('click', function() {
-            if (pageNum >= pdfDoc.numPages) return;
+    document.getElementById('page-num').textContent = num;
+}
+
+function queuePage(num) {
+    if (num < 1 || num > pdfDoc.numPages) return;
+    if (pageRendering) {
+        pageNumPending = num;
+    } else {
+        renderPage(num);
+    }
+}
+
+// Navigazione
+document.getElementById('prev-btn').addEventListener('click', () => queuePage(--pageNum));
+document.getElementById('next-btn').addEventListener('click', () => queuePage(++pageNum));
+
+// --- IMPLEMENTAZIONE SWIPE ---
+let touchstartX = 0;
+let touchendX = 0;
+
+canvas.addEventListener('touchstart', e => {
+    touchstartX = e.changedTouches[0].screenX;
+}, false);
+
+canvas.addEventListener('touchend', e => {
+    touchendX = e.changedTouches[0].screenX;
+    handleGesture();
+}, false);
+
+function handleGesture() {
+    const threshold = 50; // pixel minimi per attivare lo swipe
+    if (touchendX < touchstartX - threshold) {
+        // Swipe a sinistra -> Pagina successiva
+        if (pageNum < pdfDoc.numPages) {
             pageNum++;
             queuePage(pageNum);
-        });
-
-        // Carica il PDF
-        pdfjsLib.getDocument('foto/menu.pdf').promise.then(function(doc) {
-            pdfDoc = doc;
-            document.getElementById('page-count').textContent = doc.numPages;
-            baseScale = calculateScale(); // Calcola e memorizza la scala all'inizio
-            renderPage(pageNum);
-        });
-
-        // Re-render quando la finestra viene ridimensionata (ricalcola scala)
-        window.addEventListener('resize', function() {
-            if (pdfDoc) {
-                baseScale = calculateScale();
-                renderPage(pageNum);
-            }
-        });
-    </script>
-
-    <!-- include shared header/footer -->
-    <script>
-        function loadFragment(id, url, callback) {
-            fetch(url).then(r => r.text()).then(html => {
-                document.getElementById(id).innerHTML = html;
-                if (callback) callback();
-            });
         }
-
-        function activateNav() {
-            const navToggle = document.querySelector('.nav-toggle');
-            const nav = document.querySelector('.desktop-nav');
-            if (navToggle && nav) {
-                navToggle.addEventListener('click', () => nav.classList.toggle('open'));
-            }
-            const path = window.location.pathname;
-            document.querySelectorAll('.desktop-nav a').forEach(a => {
-                if (a.getAttribute('href') === path) {
-                    a.classList.add('active');
-                }
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadFragment('header-placeholder', 'header.html', activateNav);
-            loadFragment('footer-placeholder', 'footer.html');
-        });
-
-        window.addEventListener('resize', function() {
-    if (pdfDoc) {
-        // Forza il ricalcolo della scala al ridimensionamento
-        baseScale = 1; 
-        baseScale = calculateScale();
-        renderPage(pageNum);
     }
+    if (touchendX > touchstartX + threshold) {
+        // Swipe a destra -> Pagina precedente
+        if (pageNum > 1) {
+            pageNum--;
+            queuePage(pageNum);
+        }
+    }
+}
+
+// Caricamento PDF
+pdfjsLib.getDocument('foto/menu.pdf').promise.then(function(doc) {
+    pdfDoc = doc;
+    document.getElementById('page-count').textContent = doc.numPages;
+    renderPage(pageNum);
 });
+
+// Re-render al resize
+window.addEventListener('resize', () => {
+    if (pdfDoc) renderPage(pageNum);
+});
+
+
+
     </script>
 
 </body>

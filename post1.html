@@ -138,132 +138,122 @@
 
     <!-- include shared header/footer -->
     <script>
-        function loadFragment(id, url, callback) {
-            fetch(url).then(r => r.text()).then(html => {
-                document.getElementById(id).innerHTML = html;
-                if (callback) callback();
-            });
+     // Funzione per caricare header e footer (già presente)
+function loadFragment(id, url, callback) {
+    fetch(url).then(r => r.text()).then(html => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.innerHTML = html;
+            if (callback) callback();
         }
+    }).catch(err => console.error("Errore caricamento frammento:", err));
+}
 
-        function activateNav() {
-            const navToggle = document.querySelector('.nav-toggle');
-            const nav = document.querySelector('.desktop-nav');
-            if (navToggle && nav) {
-                navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+function activateNav() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.desktop-nav');
+    if (navToggle && nav) {
+        navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+    }
+    const path = window.location.pathname;
+    document.querySelectorAll('.desktop-nav a').forEach(a => {
+        if (a.getAttribute('href') === path) {
+            a.classList.add('active');
+        }
+    });
+}
+
+// Inizializzazione principale al caricamento della pagina
+document.addEventListener('DOMContentLoaded', function() {
+    // Carica i pezzi del sito
+    loadFragment('header-placeholder', 'header.html', activateNav);
+    loadFragment('footer-placeholder', 'footer.html');
+
+    // --- LOGICA CAROSELLO ---
+    const carouselElement = document.querySelector('.hero-carousel');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    let autoPlay;
+
+    // Funzione per aggiornare la slide visibile
+    function updateCarousel() {
+        slides.forEach(slide => slide.classList.remove('active'));
+        dots.forEach(dot => dot.classList.remove('active'));
+        
+        if(slides[currentSlide]) slides[currentSlide].classList.add('active');
+        if(dots[currentSlide]) dots[currentSlide].classList.add('active');
+    }
+
+    // Funzioni globali (per i bottoni onclick nell'HTML)
+    window.moveSlide = function(direction) {
+        currentSlide = (currentSlide + direction + slides.length) % slides.length;
+        updateCarousel();
+        resetTimer();
+    };
+
+    window.currentSlideTo = function(index) {
+        currentSlide = index;
+        updateCarousel();
+        resetTimer();
+    };
+
+    // --- GESTIONE SWIPE (TOUCH) PER MOBILE ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (carouselElement) {
+        carouselElement.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+
+        carouselElement.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleGesture();
+        }, {passive: true});
+    }
+
+    function handleGesture() {
+        const threshold = 50; // pixel minimi per considerare lo swipe
+        if (touchEndX < touchStartX - threshold) {
+            window.moveSlide(1); // Swipe verso sinistra -> vai avanti
+        }
+        if (touchEndX > touchStartX + threshold) {
+            window.moveSlide(-1); // Swipe verso destra -> vai indietro
+        }
+    }
+
+    // --- GESTIONE AUTOPLAY ---
+    function startTimer() {
+        autoPlay = setInterval(() => window.moveSlide(1), 7000);
+    }
+
+    function resetTimer() {
+        clearInterval(autoPlay);
+        startTimer();
+    }
+
+    startTimer();
+
+    // Pausa quando il mouse è sopra (solo PC)
+    if (carouselElement) {
+        carouselElement.addEventListener('mouseenter', () => clearInterval(autoPlay));
+        carouselElement.addEventListener('mouseleave', startTimer);
+    }
+
+    // --- GESTIONE HEADER SCROLL ---
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.main-header');
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.padding = '5px 0';
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            } else {
+                header.style.padding = '15px 0';
+                header.style.boxShadow = 'none';
             }
-            const path = window.location.pathname;
-            document.querySelectorAll('.desktop-nav a').forEach(a => {
-                if (a.getAttribute('href') === path) {
-                    a.classList.add('active');
-                }
-            });
         }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            loadFragment('header-placeholder', 'header.html', activateNav);
-            loadFragment('footer-placeholder', 'footer.html');
-        });
-
-
-
-
-
-
-
-
-
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
-
-function updateCarousel() {
-    // Gestione Slide
-    slides.forEach(slide => slide.classList.remove('active'));
-    slides[currentSlide].classList.add('active');
-
-    // Gestione Dots
-    dots.forEach(dot => dot.classList.remove('active'));
-    dots[currentSlide].classList.add('active');
-}
-
-function moveSlide(direction) {
-    currentSlide = (currentSlide + direction + slides.length) % slides.length;
-    updateCarousel();
-}
-
-function currentSlideTo(index) {
-    currentSlide = index;
-    updateCarousel();
-}
-
-
-// --- GESTIONE SWIPE (TOUCH) ---
-let touchStartX = 0;
-let touchEndX = 0;
-
-function handleGesture() {
-    if (touchEndX < touchStartX - 50) {
-        // Swipe a sinistra -> Prossima slide
-        moveSlide(1);
-        resetTimer();
-    }
-    if (touchEndX > touchStartX + 50) {
-        // Swipe a destra -> Slide precedente
-        moveSlide(-1);
-        resetTimer();
-    }
-}
-
-carouselElement.addEventListener('touchstart', e => {
-    touchStartX = e.changedTouches[0].screenX;
-});
-
-carouselElement.addEventListener('touchend', e => {
-    touchEndX = e.changedTouches[0].screenX;
-    handleGesture();
-});
-
-// Opzionale: Supporto al trascinamento con Mouse (per testare su PC)
-carouselElement.addEventListener('mousedown', e => {
-    touchStartX = e.screenX;
-});
-
-carouselElement.addEventListener('mouseup', e => {
-    touchEndX = e.screenX;
-    handleGesture();
-});
-
-
-
-// Autoplay più veloce (es. 7 secondi per leggere le descrizioni lunghe)
-let autoPlay = setInterval(() => moveSlide(1), 7000);
-
-// Reset timer quando l'utente clicca
-function resetTimer() {
-    clearInterval(autoPlay);
-    autoPlay = setInterval(() => moveSlide(1), 7000);
-}
-
-document.querySelector('.carousel-prev').addEventListener('click', resetTimer);
-document.querySelector('.carousel-next').addEventListener('click', resetTimer);
-
-const carouselElement = document.querySelector('.hero-carousel');
-carouselElement.addEventListener('mouseenter', () => clearInterval(autoPlay));
-carouselElement.addEventListener('mouseleave', () => {
-    autoPlay = setInterval(() => moveSlide(1), 7000);
-});
-
-
-// 1. Gestione Header dinamico allo scroll
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('.main-header');
-    if (window.scrollY > 50) {
-        header.style.padding = '5px 0';
-        header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
-    } else {
-        header.style.padding = '15px 0';
-        header.style.boxShadow = 'none';
-    }
+    });
 });
     </script>
 

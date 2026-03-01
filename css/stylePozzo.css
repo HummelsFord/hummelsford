@@ -552,3 +552,77 @@ main {
     position: relative;
     z-index: 1;
 }
+
+
+/* --- FIX DEFINITIVO ZOOM CAROSELLO MOBILE --- */
+@media (max-width: 768px) {
+    .hero-carousel {
+        /* Riduciamo drasticamente l'altezza: 40vh invece di 85vh o 60vh */
+        height: 45vh !important; 
+        width: 100%;
+        margin: 0;
+        border-radius: 0;
+    }
+
+    .slide {
+        /* 'contain' mostra tutta la foto senza tagliarla, 
+           ma potrebbe lasciare bordi neri se la foto è troppo corta.
+           Usiamo 'cover' con una posizione strategica per minimizzare lo zoom. */
+        background-size: cover;
+        background-position: center 20%; /* Inquadra più la parte alta/centrale */
+    }
+
+    .slide-content {
+        /* Riduciamo i testi su mobile per non coprire tutta la foto */
+        padding: 10px;
+        width: 95%;
+        background: rgba(0, 0, 0, 0.4); /* Scuriamo un po' il fondo testo per leggibilità */
+    }
+
+    .slide h1, .about-text-carousel h2 {
+        font-size: 1.8rem !important; /* Testo più piccolo */
+        margin-bottom: 10px;
+    }
+
+    .slide-subtitle, .about-text-carousel p {
+        font-size: 0.9rem !important;
+        margin-bottom: 15px;
+        line-height: 1.4;
+    }
+
+    .hero-buttons .btn {
+        padding: 10px 15px;
+        font-size: 0.8rem;
+        margin: 5px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Nascondi le frecce su mobile per lasciare spazio allo swipe */
+    .pdf-arrow {
+        display: none;
+    }
+    
+    .pdf-viewer {
+        padding: 0;
+        touch-action: pan-y; /* Permette lo scroll verticale ma cattura l'orizzontale */
+    }
+
+    /* Mostra sempre la info pagina su mobile */
+    .pdf-footer {
+        display: block !important;
+        background: #f1f1f1;
+        padding: 10px;
+        border-radius: 5px;
+    }
+}
+
+#pdf-canvas {
+    cursor: grab;
+    max-width: 100% !important;
+    height: auto !important;
+}
+#pdf-canvas:active {
+    cursor: grabbing;
+}
+
