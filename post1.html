@@ -2,12 +2,273 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <title>Primo Post</title>
-    <link rel="stylesheet" href="../css/style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Il Pozzo</title>
+    <meta name="description" content="Il bar, ristorante e pizzeria Il Pozzo è il luogo ideale, un piccolo angolo di paradiso, situato ad Orta San Giulio">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="css/stylePozzo.css">
 </head>
 <body>
-    <h1>Primo Post</h1>
-    <p>Qui scrivo il contenuto del mio primo post del blog.</p>
-    <a href="index.html">← Torna alla home</a>
+
+    <div id="header-placeholder"></div>
+
+<main>
+    <section class="hero-carousel-wrapper">
+        <div class="hero-carousel">
+            <div class="carousel-container">
+                <div class="slide active" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/06/POZZO1ESTERNOweb2extreme.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <span class="badge">Benvenuti a Orta San Giulio</span>
+                        <h1>Bar Ristorante<br>Il Pozzo</h1>
+                        <p class="slide-subtitle">Cucina genuina, pizzeria e minigolf con vista sul Lago d'Orta</p>
+                        <div class="hero-buttons">
+                            <a href="#" class="btn btn-orange">Chi Siamo</a>
+                            <a href="#" class="btn btn-green">I Nostri Servizi</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/06/pozzo4internoweb.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <div class="about-text-carousel">
+                            <h2>Vista Lago Mozzafiato</h2>
+                            <p>Il luogo perfetto per un caffè, un pranzo veloce o una cena romantica ammirando l'Isola di San Giulio.</p>
+                            <a href="#" class="btn btn-outline-white">Esplora il Locale</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/06/pozzo3piattoweb.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <div class="about-text-carousel">
+                            <h2>Pasta Fresca Fatta a Mano</h2>
+                            <p>Come facevano le nonne: tagliolini, ravioli e spaghetti lavorati con olio di gomito e ingredienti scelti. Anche in versione **Senza Glutine**.</p>
+                            <a href="#" class="btn btn-orange">Il nostro Menù</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/06/POZZO1ESTERNOweb2extreme.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <div class="about-text-carousel">
+                            <h2>La Vera Pizza con Lievito Madre</h2>
+                            <p>Il nostro pizzaiolo Renato usa solo lievito madre per un impasto leggero e digeribile. Pizze classiche e speciali, disponibili anche per celiaci.</p>
+                            <a href="#" class="btn btn-green">Le Pizze</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/04/bottle-3308985_640-500x300.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <div class="about-text-carousel">
+                            <h2>Cocktail, Birre e Relax</h2>
+                            <p>Dai classici Mojito alle creazioni Fusion, accompagnati da decorazioni di frutta fresca. E per gli amanti della birra: bionde, rosse, doppio e triplo malto delle migliori marche.</p>
+                            <a href="#" class="btn btn-outline-white">La Carta dei Drink</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/06/pozzo2piattoweb.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <div class="about-text-carousel">
+                            <h2>Dolci Genuini a KM 0</h2>
+                            <p>Zero conservanti, solo prodotti delle nostre campagne. Prova la nostra celebre Cheesecake alla Nutella preparata fresca ogni giorno dal nostro pasticciere.</p>
+                            <a href="#" class="btn btn-orange">Vedi i Dolci</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide" style="background-image: url('https://ilpozzoristorante.com/wp-content/uploads/2018/04/152414512941658108.jpg');">
+                    <div class="hero-overlay"></div>
+                    <div class="slide-content">
+                        <div class="about-text-carousel">
+                            <h2>Minigolf Panoramico</h2>
+                            <p>Divertimento all'aria aperta con vista sul Lago d'Orta. Mazze e palline le forniamo noi! Un'attività accessibile a tutti per sfidare amici e famiglia.</p>
+                            <a href="https://www.ilpozzosport.it/" class="btn btn-green">Prenota una Buca</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="carousel-prev" onclick="moveSlide(-1)"><i class="fas fa-chevron-left"></i></button>
+            <button class="carousel-next" onclick="moveSlide(1)"><i class="fas fa-chevron-right"></i></button>
+            
+            <div class="carousel-dots">
+                <span class="dot active" onclick="currentSlideTo(0)"></span>
+                <span class="dot" onclick="currentSlideTo(1)"></span>
+                <span class="dot" onclick="currentSlideTo(2)"></span>
+                <span class="dot" onclick="currentSlideTo(3)"></span>
+                <span class="dot" onclick="currentSlideTo(4)"></span>
+                <span class="dot" onclick="currentSlideTo(5)"></span>
+                <span class="dot" onclick="currentSlideTo(6)"></span>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-3-col container">
+        <div class="feature-box reveal">
+            <div class="icon-wrap"><i class="fas fa-coffee"></i></div>
+            <h2>Bar & Drink</h2>
+        </div>
+        <div class="feature-box reveal">
+            <div class="icon-wrap"><i class="fas fa-utensils"></i></div>
+            <h2>Ristorante & Pasta</h2>
+        </div>
+        <div class="feature-box reveal">
+            <div class="icon-wrap"><i class="fas fa-pizza-slice"></i></div>
+            <h2>Pizzeria Artigianale</h2>
+        </div>
+        <div class="feature-box reveal">
+            <div class="icon-wrap"><i class="fas fa-golf-ball"></i></div>
+            <h2>Minigolf</h2>
+        </div>
+    </section>
+</main>
+   
+    <div id="footer-placeholder"></div>
+
+    <!-- include shared header/footer -->
+    <script>
+        function loadFragment(id, url, callback) {
+            fetch(url).then(r => r.text()).then(html => {
+                document.getElementById(id).innerHTML = html;
+                if (callback) callback();
+            });
+        }
+
+        function activateNav() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const nav = document.querySelector('.desktop-nav');
+            if (navToggle && nav) {
+                navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+            }
+            const path = window.location.pathname;
+            document.querySelectorAll('.desktop-nav a').forEach(a => {
+                if (a.getAttribute('href') === path) {
+                    a.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFragment('header-placeholder', 'header.html', activateNav);
+            loadFragment('footer-placeholder', 'footer.html');
+        });
+
+
+
+
+
+
+
+
+
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+function updateCarousel() {
+    // Gestione Slide
+    slides.forEach(slide => slide.classList.remove('active'));
+    slides[currentSlide].classList.add('active');
+
+    // Gestione Dots
+    dots.forEach(dot => dot.classList.remove('active'));
+    dots[currentSlide].classList.add('active');
+}
+
+function moveSlide(direction) {
+    currentSlide = (currentSlide + direction + slides.length) % slides.length;
+    updateCarousel();
+}
+
+function currentSlideTo(index) {
+    currentSlide = index;
+    updateCarousel();
+}
+
+
+// --- GESTIONE SWIPE (TOUCH) ---
+let touchStartX = 0;
+let touchEndX = 0;
+
+function handleGesture() {
+    if (touchEndX < touchStartX - 50) {
+        // Swipe a sinistra -> Prossima slide
+        moveSlide(1);
+        resetTimer();
+    }
+    if (touchEndX > touchStartX + 50) {
+        // Swipe a destra -> Slide precedente
+        moveSlide(-1);
+        resetTimer();
+    }
+}
+
+carouselElement.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+carouselElement.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleGesture();
+});
+
+// Opzionale: Supporto al trascinamento con Mouse (per testare su PC)
+carouselElement.addEventListener('mousedown', e => {
+    touchStartX = e.screenX;
+});
+
+carouselElement.addEventListener('mouseup', e => {
+    touchEndX = e.screenX;
+    handleGesture();
+});
+
+
+
+// Autoplay più veloce (es. 7 secondi per leggere le descrizioni lunghe)
+let autoPlay = setInterval(() => moveSlide(1), 7000);
+
+// Reset timer quando l'utente clicca
+function resetTimer() {
+    clearInterval(autoPlay);
+    autoPlay = setInterval(() => moveSlide(1), 7000);
+}
+
+document.querySelector('.carousel-prev').addEventListener('click', resetTimer);
+document.querySelector('.carousel-next').addEventListener('click', resetTimer);
+
+const carouselElement = document.querySelector('.hero-carousel');
+carouselElement.addEventListener('mouseenter', () => clearInterval(autoPlay));
+carouselElement.addEventListener('mouseleave', () => {
+    autoPlay = setInterval(() => moveSlide(1), 7000);
+});
+
+
+// 1. Gestione Header dinamico allo scroll
+window.addEventListener('scroll', () => {
+    const header = document.querySelector('.main-header');
+    if (window.scrollY > 50) {
+        header.style.padding = '5px 0';
+        header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+    } else {
+        header.style.padding = '15px 0';
+        header.style.boxShadow = 'none';
+    }
+});
+    </script>
+
+    
+
 </body>
 </html>

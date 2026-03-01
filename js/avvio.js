@@ -5,16 +5,21 @@ import { inizializzaEventiNavigazione } from "./eventiNavigazione.js";
 import { inizializzaForm } from "./formAggiungiFilm.js";
 
 async function avviaApplicazione() {
-  // Carica i dati iniziali
-  statoFilm.lista = await caricaFilmDalServer();
-  
-  // Mostra il primo film
+  // 1. Scarica i dati dal database
+  const filmDalServer = await caricaFilmDalServer();
+  statoFilm.lista = filmDalServer;
+
+  // 2. PRE-CARICAMENTO: Forza il browser a scaricare le immagini ora
+  filmDalServer.forEach(film => {
+    if (film.url_immagine) { // Assicurati che il nome del campo sia corretto
+      const imgCache = new Image();
+      imgCache.src = film.url_immagine;
+    }
+  });
+
+  // 3. Mostra il primo film e attiva i comandi
   mostraFilmCorrente();
-  
-  // Attiva i bottoni avanti/indietro
   inizializzaEventiNavigazione();
-  
-  // Attiva il form di inserimento
   inizializzaForm();
 }
 

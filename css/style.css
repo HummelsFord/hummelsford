@@ -1,5 +1,8 @@
+/* RESET E BASI */
 * {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 html {
@@ -10,180 +13,140 @@ body {
     font-family: Arial, sans-serif;
     background: linear-gradient(to bottom, #f9f9f9, #eaeaea);
     color: #333;
-    padding: 40px;
+    padding: 20px; /* Padding ridotto per mobile */
     display: flex;
     flex-direction: column;
     align-items: center;
+    min-height: 100vh;
 }
 
+/* TIPOGRAFIA RESPONSIVE */
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 30px;
+    font-size: 2rem; /* Più piccolo di base */
+    margin: 20px 0;
+    text-align: center;
 }
 
-a {
-    color: #2980b9;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Slider */
+/* SLIDER E CONTENITORI FLUIDI */
 .slider {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 20px;
+    gap: 10px;
+    width: 100%;
+    max-width: 900px; /* Limite massimo per schermi grandi */
 }
 
-.slider button {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: white;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-    font-size: 22px;
-    transition: background 0.2s, transform 0.2s;
-    transform-origin: center center;
-    cursor: pointer;
-}
-
-.slider button:hover {
-    background: #f0f0f0;
-    transform: scale(1.05);
-}
-
-/* Film container */
 #film-container {
-    width: 700px;
-    min-height: 600px;
+    width: 100%;      /* Occupa tutto lo spazio disponibile */
+    max-width: 700px; /* Ma non oltre i 700px */
+    min-height: 500px;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: opacity 0.3s ease;
 }
 
-/* Card */
+/* CARD RESPONSIVE */
 .film-card {
-    border: none;
     border-radius: 18px;
-    padding: 25px;
+    padding: 20px;
     background: white;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     width: 100%;
-    min-height: 600px;
     display: flex;
     flex-direction: column;
+    gap: 15px;
 }
 
-.film-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
-}
-
-/* Film main */
+/* DISPOSIZIONE CONTENUTO CARD (Mobile First: incolonnato) */
 .film-main {
     display: flex;
+    flex-direction: column; /* Default: uno sotto l'altro */
+    align-items: center;
     gap: 20px;
-    align-items: flex-start;
-    flex-wrap: wrap;
+    text-align: center;
 }
 
 .film-main img {
-    width: 200px;
-    height: 300px;
-    object-fit: cover;
+    width: 100%;
+    max-width: 200px; /* Impedisce alla locandina di diventare enorme */
+    height: auto;
     border-radius: 10px;
-    background-color: #eee;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .film-info {
-    flex: 1;
+    width: 100%;
 }
 
-.film-card h2 {
-    font-size: 1.8rem;
-    margin-bottom: 10px;
-}
-
-.film-info p {
-    margin: 4px 0;
-    font-size: 0.95rem;
-    color: #555;
-}
-
-/* Notes */
-.film-notes {
-    margin-top: 20px;
-    padding: 15px;
-    background: #f7f7f7;
-    border-radius: 10px;
-    font-style: italic;
-    max-height: 150px;
-    overflow-y: auto;
-}
-
-.film-notes::-webkit-scrollbar {
-    width: 6px;
-}
-
-.film-notes::-webkit-scrollbar-thumb {
-    background: rgba(0,0,0,0.2);
-    border-radius: 3px;
-}
-
-
+/* FORM E SEZIONI */
 #nuovo-film-section {
+    width: 100%;
     max-width: 500px;
-    margin: 20px auto;
+    margin: 40px auto;
     padding: 20px;
-    background: #f9f9f9;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 12px;
+    border: 1px solid #eee;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
+/* Form Group: Incolonnato su mobile, riga su desktop */
 .form-group {
     display: flex;
+    flex-direction: column; 
     gap: 10px;
     margin-bottom: 10px;
-}
-
-input, textarea {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-#btn-salva {
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-}
-
-#btn-salva:hover {
-    background-color: #0051a2;
 }
 
 .form-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Autofill intelligente */
     gap: 10px;
     margin-bottom: 15px;
 }
 
-#form-film input, #form-film textarea {
-    margin-bottom: 10px; /* Spazio tra le righe */
+/* BOTTONI SLIDER (più piccoli su mobile) */
+.slider button {
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0; /* Impedisce al bottone di schiacciarsi */
+    border-radius: 50%;
+    border: none;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    font-size: 18px;
 }
 
-#dataDiVisione {
-    cursor: pointer;
+/* --- MEDIA QUERIES PER DESKTOP (Schermi sopra i 768px) --- */
+@media (min-width: 768px) {
+    body {
+        padding: 40px;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .film-main {
+        flex-direction: row; /* Affianca immagine e testo */
+        text-align: left;
+        align-items: flex-start;
+    }
+
+    .form-group {
+        flex-direction: row; /* Input del form affiancati */
+    }
+
+    .slider {
+        gap: 30px;
+    }
+
+    .slider button {
+        width: 50px;
+        height: 50px;
+        font-size: 22px;
+    }
 }

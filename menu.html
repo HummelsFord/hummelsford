@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu - Il Pozzo</title>
+    <meta name="description" content="Il menu del ristorante Il Pozzo">
+
+    <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/stylePozzo.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+
+    <div id="header-placeholder"></div>
+
+   <main>
+   <section class="container" style="margin-top: 80px; text-align: center;">
+        <h2 class="section-title">Il nostro Menu</h2>
+        <div style="margin-bottom: 30px;">
+            <a href="foto/menu.pdf" download class="btn btn-orange">
+                <i class="fas fa-file-download"></i> Scarica il Menu Completo (PDF)
+            </a>
+        </div>
+    </section>
+
+    <section class="pdf-container container">
+        <div class="pdf-wrapper">
+            <button id="prev-btn" class="pdf-arrow pdf-arrow-left"><i class="fas fa-chevron-left"></i></button>
+            <div class="pdf-viewer">
+                <canvas id="pdf-canvas"></canvas>
+            </div>
+            <button id="next-btn" class="pdf-arrow pdf-arrow-right"><i class="fas fa-chevron-right"></i></button>
+        </div>
+        <div class="pdf-footer" style="display: block; text-align: center; margin-top: 10px;">
+            <span class="pdf-page-info">Pagina <span id="page-num">1</span> di <span id="page-count">1</span></span>
+        </div>
+    </section>
+</main>
+
+    <div id="footer-placeholder"></div>
+
+
+
+    <!-- PDF Viewer Script -->
+    <script>
+        let pdfDoc = null;
+        let pageNum = 1;
+        let pageRendering = false;
+        let pageNumPending = null;
+        let baseScale = 1; // Memorizza la scala iniziale
+
+        const canvas = document.getElementById('pdf-canvas');
+        const ctx = canvas.getContext('2d');
+        const pdfViewer = document.querySelector('.pdf-viewer');
+
+        // Set worker for PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        function calculateScale() {
+            // Calcola scala una sola volta al caricamento
+            if (baseScale !== 1) return baseScale;
+
+            const availWidth = pdfViewer.clientWidth;
+            // ignore height - container may not constrain vertically
+            let scale = availWidth / 595; // base on A4 width
+
+            // riduci ancora di più su desktop per renderlo più piccolo
+            if (window.innerWidth > 1024) {
+                scale *= 0.5; // riduzione aggiuntiva
+            }
+
+            return scale;
+        }
+
+        function renderPage(num) {
+            pageRendering = true;
+            pdfDoc.getPage(num).then(function(page) {
+                const scale = baseScale;
+                const viewport = page.getViewport({ scale: scale });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                const renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport
+                };
+                const renderTask = page.render(renderContext);
+                renderTask.promise.then(function() {
+                    pageRendering = false;
+                    if (pageNumPending !== null) {
+                        renderPage(pageNumPending);
+                        pageNumPending = null;
+                    }
+                });
+            });
+
+            document.getElementById('page-num').textContent = num;
+        }
+
+        function queuePage(num) {
+            if (num < 1 || num > pdfDoc.numPages) {
+                return;
+            }
+            if (pageRendering) {
+                pageNumPending = num;
+            } else {
+                renderPage(num);
+            }
+        }
+
+        document.getElementById('prev-btn').addEventListener('click', function() {
+            if (pageNum <= 1) return;
+            pageNum--;
+            queuePage(pageNum);
+        });
+
+        document.getElementById('next-btn').addEventListener('click', function() {
+            if (pageNum >= pdfDoc.numPages) return;
+            pageNum++;
+            queuePage(pageNum);
+        });
+
+        // Carica il PDF
+        pdfjsLib.getDocument('foto/menu.pdf').promise.then(function(doc) {
+            pdfDoc = doc;
+            document.getElementById('page-count').textContent = doc.numPages;
+            baseScale = calculateScale(); // Calcola e memorizza la scala all'inizio
+            renderPage(pageNum);
+        });
+
+        // Re-render quando la finestra viene ridimensionata (ricalcola scala)
+        window.addEventListener('resize', function() {
+            if (pdfDoc) {
+                baseScale = calculateScale();
+                renderPage(pageNum);
+            }
+        });
+    </script>
+
+    <!-- include shared header/footer -->
+    <script>
+        function loadFragment(id, url, callback) {
+            fetch(url).then(r => r.text()).then(html => {
+                document.getElementById(id).innerHTML = html;
+                if (callback) callback();
+            });
+        }
+
+        function activateNav() {
+            const navToggle = document.querySelector('.nav-toggle');
+            const nav = document.querySelector('.desktop-nav');
+            if (navToggle && nav) {
+                navToggle.addEventListener('click', () => nav.classList.toggle('open'));
+            }
+            const path = window.location.pathname;
+            document.querySelectorAll('.desktop-nav a').forEach(a => {
+                if (a.getAttribute('href') === path) {
+                    a.classList.add('active');
+                }
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFragment('header-placeholder', 'header.html', activateNav);
+            loadFragment('footer-placeholder', 'footer.html');
+        });
+
+        window.addEventListener('resize', function() {
+    if (pdfDoc) {
+        // Forza il ricalcolo della scala al ridimensionamento
+        baseScale = 1; 
+        baseScale = calculateScale();
+        renderPage(pageNum);
+    }
+});
+    </script>
+
+</body>
+</html>

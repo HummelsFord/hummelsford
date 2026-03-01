@@ -1,0 +1,554 @@
+/* --- RESET E VARIABILI --- */
+:root {
+    --colore-arancio: #e4492e;
+    --colore-verde: #6ba900;
+    --colore-testo: #333333;
+    --font-titoli: 'Work Sans', sans-serif;
+    --font-testo: 'Roboto', sans-serif;
+    --header-height: 220px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: var(--font-testo);
+    color: var(--colore-testo);
+    line-height: 1.8;
+    padding-top: var(--header-height);
+}
+
+h1, h2, h3 { font-family: var(--font-titoli); }
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* --- HEADER --- */
+.main-header {
+    background: #fff;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 2000;
+}
+
+body {
+    padding-top: 150px; /* spazio per l'header fisso */
+}
+
+/* riduci il padding sul mobile quando l'header è più piccolo */
+@media (max-width: 768px) {
+    body { padding-top: 80px; }
+}
+
+.header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    max-height: 200px;
+    width: auto;
+    flex-shrink: 0;
+}
+
+.desktop-nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.desktop-nav a {
+    text-decoration: none;
+    color: var(--colore-testo);
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.desktop-nav a:hover, .desktop-nav a.active {
+    color: var(--colore-arancio);
+}
+
+/* --- HERO SECTION --- */
+.hero {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    height: 80vh; /* Occupa l'80% dello schermo */
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.4); /* Scurisce leggermente la foto per far leggere il testo */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.hero h1 {
+    color: #fff;
+    font-size: 4.5rem;
+    margin-bottom: 30px;
+}
+
+.btn {
+    padding: 15px 35px;
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 3px;
+    margin: 0 10px;
+    display: inline-block;
+}
+
+.btn-orange { background: rgba(228, 73, 46, 0.85); }
+.btn-green { background: rgba(107, 169, 0, 0.85); }
+.btn-orange:hover, .btn-green:hover { background: #fff; color: #000; }
+
+/* --- 3 ICONE --- */
+.features-3-col {
+    display: flex;
+    justify-content: space-between;
+    padding: 60px 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+.feature-box { width: 30%; text-align: center; }
+
+/* --- ABOUT SPLIT (L'immagine a sx e testo arancio a dx) --- */
+.about-split {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.about-img, .about-text {
+    width: 50%;
+}
+
+.about-img {
+    background-size: cover;
+    background-position: center;
+    min-height: 500px;
+}
+
+.about-text {
+    background: var(--colore-arancio);
+    color: #fff;
+    padding: 80px 10%;
+}
+
+.about-text h2 { font-size: 3rem; margin-bottom: 20px; }
+.btn-outline-white { border: 2px solid #fff; margin-top: 20px; }
+
+/* --- SERVIZI --- */
+.services-4-col { padding: 80px 20px; text-align: center; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+.section-title { margin-bottom: 40px; font-size: 2.5rem; }
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.service-card img { max-width: 100%; margin-bottom: 15px; }
+.service-card h3 { font-size: 1.1rem; margin-bottom: 10px; }
+.service-card a { color: var(--colore-arancio); text-decoration: none; font-style: italic; }
+
+/* --- FOOTER --- */
+.main-footer { background: #333; color: #fff; padding-top: 50px; }
+.footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+.footer-col h3 { border-bottom: 1px solid #555; padding-bottom: 10px; margin-bottom: 20px; }
+.footer-col ul { list-style: none; }
+.footer-col a { color: #fff; text-decoration: none; transition: color 0.3s ease; }
+.social-icons i { font-size: 24px; margin-right: 15px; margin-top: 15px; cursor: pointer; }
+.footer-bottom { text-align: center; padding: 20px; background: #222; margin-top: 40px; font-size: 12px; }
+
+/* --- RESPONSIVE MOBILE --- */
+@media (max-width: 768px) {
+    .desktop-nav ul { flex-wrap: wrap; justify-content: center; }
+    .hero h1 { font-size: 2.5rem; }
+    .features-3-col { flex-direction: column; gap: 30px; }
+    .feature-box { width: 100%; }
+    .about-img, .about-text { width: 100%; }
+    .services-grid { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr; }
+}
+
+/* --- GENERAL IMPROVEMENTS --- */
+body {
+    background-color: #f9f9f9;
+}
+
+/* Buttons transition */
+.btn {
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Navigation toggle button */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--colore-testo);
+    margin-left: auto;
+}
+
+.desktop-nav.open {
+    display: block;
+    z-index: 1001;
+}
+
+.hero h1 { text-shadow: 0 2px 4px rgba(0,0,0,0.6); }
+
+/* Icons in feature boxes */
+.feature-box i {
+    font-size: 3rem;
+    color: var(--colore-arancio);
+    margin-bottom: 15px;
+}
+
+/* Service card hover effect */
+.service-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Footer enhancements */
+.footer-col a:hover { color: var(--colore-arancio); }
+.social-icons i:hover { color: var(--colore-arancio); }
+
+@media (max-width: 768px) {
+    .nav-toggle { display: block; }
+    .desktop-nav { display: none; position: absolute; top: 65px; left: 0; width: 100%; background: #fff; z-index: 1999; max-height: 165px; overflow-y: auto; border-top: 1px solid #ddd; }
+    .desktop-nav.open { display: block; }
+    .desktop-nav ul { flex-direction: column; align-items: stretch; gap: 0; }
+    .desktop-nav li { width: 100%; text-align: center; border-bottom: 1px solid #eee; }
+    .desktop-nav li:last-child { border-bottom: none; }
+    .desktop-nav a { padding: 15px 0; display: block; width: 100%; }
+    .logo img { max-height: 70px; }
+}
+
+/* PDF viewer page */
+.pdf-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+}
+
+.pdf-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.pdf-arrow {
+    background: var(--colore-arancio);
+    color: #fff;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, transform 0.2s;
+    flex-shrink: 0;
+}
+
+.pdf-arrow:hover {
+    background: #d63a1f;
+    transform: scale(1.1);
+}
+
+.pdf-arrow:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pdf-footer {
+    display: none;
+}
+
+.pdf-page-info {
+    font-size: 14px;
+}
+
+.pdf-viewer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height removed to allow natural sizing */
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+}
+
+#pdf-canvas {
+    display: block;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+}
+
+
+
+
+
+
+
+
+
+/* --- FIX CAROSELLO --- */
+.hero-carousel {
+    position: relative;
+    height: 85vh;
+    width: 95%;           /* Non più 100% */
+    max-width: 1400px;    /* Imposta un limite massimo se vuoi */
+    margin: 20px auto;    /* 'auto' lo centra, 20px dà margine sopra e sotto */
+    overflow: hidden;
+    background: #000;
+    border-radius: 15px;  /* Opzionale: arrotonda gli angoli per un look più moderno */
+}
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.slide {
+    position: absolute; /* Fondamentale per non vedere i quadrati/blocchi */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0; /* Nasconde le slide non attive */
+    visibility: hidden;
+    transition: opacity 1.2s ease-in-out, transform 1.2s ease;
+    transform: scale(1.05); /* Effetto zoom per eliminare i bordi bianchi */
+    z-index: 1;
+}
+
+.slide.active {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1); /* Torna alla dimensione normale */
+    z-index: 2;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45); /* Overlay scuro uniforme */
+    z-index: 1;
+}
+
+.slide-content {
+    position: relative;
+    z-index: 3; /* Sopra l'overlay */
+    padding: 0 20px;
+    max-width: 900px;
+    color: #fff;
+}
+
+/* Stile Testi */
+.badge {
+    background: var(--colore-verde);
+    color: #fff;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.slide h1, .about-text-carousel h2 {
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Testo fluido che non rompe il layout */
+    line-height: 1.1;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
+}
+
+.slide-subtitle, .about-text-carousel p {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    max-width: 700px;
+    margin: 0 auto 30px;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.5);
+}
+
+/* Frecce e Dots */
+.carousel-prev, .carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
+}
+
+.carousel-prev:hover, .carousel-next:hover { background: var(--colore-arancio); }
+.carousel-prev { left: 20px; }
+.carousel-next { right: 20px; }
+
+.carousel-dots {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    gap: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 50%;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.dot.active {
+    background: var(--colore-arancio);
+    width: 25px;
+    border-radius: 5px;
+}
+@media (max-width: 768px) {
+    .about-text-carousel h2 { font-size: 2.2rem; }
+    .about-text-carousel p { font-size: 1rem; }
+    .carousel-prev, .carousel-next { display: none; } /* Nascondi frecce su mobile per pulizia */
+}
+
+
+
+
+@media (max-width: 768px) {
+    .pdf-controls {
+        flex-direction: column;
+    }
+    
+    .nav-btn {
+        width: 100%;
+    }
+    
+    .pdf-viewer {
+        height: calc(100vh - 320px);
+    }
+}
+
+
+/* Floating Action Button per Mobile */
+.mobile-call-tap {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--colore-verde);
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 3000;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-call-tap { display: flex; }
+}
+
+/* Miglioramento visibilità testo Hero */
+.slide-content {
+    background: rgba(0, 0, 0, 0.2); /* Leggera protezione extra per il testo */
+    padding: 20px;
+    border-radius: 10px;
+    backdrop-filter: blur(2px);
+}
+
+/* Transizione fluida per l'header */
+.main-header {
+    transition: all 0.3s ease;
+}
+/* Forza il distacco del contenuto dall'header fisso */
+main {
+    padding-top: 20px; 
+}
+
+/* Specifico per la pagina menu se vuoi più respiro */
+.menu-page-header {
+    margin-top: 40px;
+    margin-bottom: 20px;
+}
+
+/* Quando lo schermo è piccolo (logo ridotto), abbassiamo il margine */
+@media (max-width: 768px) {
+    :root {
+        --header-height: 100px;
+    }
+}
+
+/* Fix specifico per evitare sovrapposizioni inaspettate */
+main {
+    display: block;
+    position: relative;
+    z-index: 1;
+}
