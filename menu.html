@@ -45,6 +45,39 @@
 
     <!-- PDF Viewer Script -->
     <script>
+
+
+// Funzione per caricare componenti esterni
+    function loadComponent(id, file) {
+        fetch(file)
+            .then(response => {
+                if (response.ok) return response.text();
+                throw new Error('Errore nel caricamento di ' + file);
+            })
+            .then(data => {
+                document.getElementById(id).innerHTML = data;
+                
+                // Se hai un menu mobile (nav-toggle), inizializzalo qui dopo il caricamento
+                if (id === 'header-placeholder') {
+                    initMobileMenu();
+                }
+            })
+            .catch(error => console.error(error));
+    }
+
+    function initMobileMenu() {
+        const toggle = document.querySelector('.nav-toggle');
+        const nav = document.querySelector('.desktop-nav');
+        if (toggle && nav) {
+            toggle.addEventListener('click', () => {
+                nav.classList.toggle('open');
+            });
+        }
+    }
+
+    // Carica i file (assicurati che i nomi dei file siano corretti)
+    loadComponent('header-placeholder', 'header.html');
+    loadComponent('footer-placeholder', 'footer.html');
     let pdfDoc = null;
 let pageNum = 1;
 let pageRendering = false;
