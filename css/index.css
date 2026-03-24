@@ -1,0 +1,49 @@
+/* RESET E BASI */
+* {
+    margin: 0;               /* Rimuove margini di default di tutti gli elementi. Utile perché `<h1>` e `<ul>` hanno margini di default del browser. */
+    padding: 0;              /* Rimuove padding di default. Utile per `<ul>` (che ha padding interno di default). */
+}
+
+body {
+    font-family: Arial, sans-serif; /* Imposta il font principale.*/
+    background: linear-gradient(to bottom, #f9f9f9, #eaeaea); /* Sfondo sfumato verticale.*/
+    color: #333;                    /* Colore testo principale.*/
+    min-height: 100vh;              /* Assicura che il body occupi tutta l’altezza della finestra.*/
+}
+
+h1 {
+    font-size: 2rem; /* Dimensione base del titolo. */
+    margin: 20px 0;  /* Spazio sopra e sotto il titolo. */
+    text-align: center; /* Centra il testo orizzontalmente.*/
+}
+
+.container {
+    max-width: 800px;      /* Limita la larghezza per rendere la lettura più comoda */
+    margin: 0 auto;        /* Centra orizzontalmente */
+    padding: 20px;         /* Dà spazio interno */
+    border-radius: 10px;   /* Angoli arrotondati */ 
+}
+
+ul li a {
+    text-decoration: none;       /* Rimuove la sottolineatura */
+    color: #0077cc;              /* Colore blu accattivante */
+    font-weight: bold;           /* Testo in grassetto */
+    padding: 10px 15px;          /* Spazio interno al link */
+    border-radius: 5px;          /* Angoli arrotondati */
+    transition: all 0.3s ease;   /* Animazione al passaggio del mouse */
+}
+
+ul li {
+    margin-bottom: 10px; /* spazio tra i link */
+}
+
+ul li a:hover {
+    background-color: #0077cc;   /* Sfondo blu al passaggio del mouse */
+    color: #fff;                 /* Testo bianco al passaggio del mouse */
+}
+
+@media (max-width: 600px) {
+    ul {
+        gap: 8px;              /* Riduce lo spazio tra i link */
+    }
+}
